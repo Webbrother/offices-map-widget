@@ -11,7 +11,7 @@
 
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -19,6 +19,11 @@
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/sticky-footer-navbar.css">
   <!-- endbuild -->
+
+  <!-- build:css styles/offices-map-widget.min.css -->
+  <link rel="stylesheet" href="styles/offices-map-widget.css">
+  <!-- endbuild -->
+
 
 </head>
 <body>
@@ -54,9 +59,35 @@
 </nav>
 
 <div class="container">
+  <div id="offices-map">
+    <!--<div class="input-group">-->
+    <!--<input type="text" class="form-control" placeholder="Search for...">-->
+    <!--<span class="input-group-btn">-->
+    <!--<button class="btn btn-default" type="button">Go!</button>-->
+    <!--</span>-->
+    <!--</div>&lt;!&ndash; /input-group &ndash;&gt;-->
 
-  <div id="offices-map" class="panel">
-    <div id="map" ></div>
+    <div id="offices-map-widget">
+      <!--<div class="input-group">-->
+        <!--<input type="text" class="form-control" placeholder="Search for...">-->
+        <!--<span class="input-group-btn">-->
+          <!--<button class="btn btn-default" type="button">Go!</button>-->
+        <!--</span>-->
+      <!--</div>-->
+      <!-- /input-group -->
+      <!--<hr>-->
+      <div >
+        <input type="text" placeholder="Адрес, номер дома или станция метро" />
+        <span>
+		      <button type="button">
+            Найти
+          </button>
+        </span>
+      </div>
+    </div>
+
+
+    <!--<div id="map" class="panel"></div>-->
 
   </div>
 </div>
@@ -113,7 +144,7 @@
 <script src="scripts/main.js"></script>
 <!-- endbuild -->
 
-<!-- build:js scripts/offices-map-widget.js -->
+<!-- build:js scripts/offices-map-widget.min.js -->
 <script src="scripts/offices-map-widget.js"></script>
 <script src="scripts/map-init.js"></script>
 <!-- endbuild -->
@@ -128,6 +159,7 @@
   };
 
   w.init(settings);
+
 </script>
 <!-- Offices-widget init end -->
 
