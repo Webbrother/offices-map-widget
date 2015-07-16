@@ -21,6 +21,7 @@
   <!-- endbuild -->
 
   <!-- build:css styles/offices-map-widget.min.css -->
+  <link rel="stylesheet" href="vendor/lite-bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles/offices-map-widget.css">
   <!-- endbuild -->
 
@@ -136,6 +137,7 @@
 <!-- endbuild -->
 
 <!-- build:js scripts/offices-map-widget.min.js -->
+<script src="scripts/library.js"></script>
 <script src="scripts/widget-settings.js"></script>
 <script src="scripts/map-init.js"></script>
 <script src="scripts/offices-map-widget.js"></script>
@@ -145,7 +147,7 @@
 <script>
 
   var settings = {
-    hostElement: "#offices-map"// id
+    hostElementId: "offices-map"// id
     //, size: [200,300]
     , center: [55.76, 37.64]
   };

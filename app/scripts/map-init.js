@@ -6,12 +6,7 @@ var map = (function () {
     map = new ymaps.Map("map", {
       center: [55.76, 37.64],
       zoom: 7,
-      controls: [
-        'fullscreenControl'
-        //, 'geolocationControl'
-        , 'typeSelector'
-        //, 'zoomControl'
-      ]
+      controls: ['fullscreenControl']
     });
 
     myPlacemark = new ymaps.Placemark(
@@ -24,18 +19,15 @@ var map = (function () {
 
     map.geoObjects.add(myPlacemark);
 
-    //map.controls.add('zoomControl', {float: 'right'});
-
     var geolocationControl = new ymaps.control.GeolocationControl({
       options: {
-        //size: 'small',
+        size: 'small',
         position: {
           right: 10,
           top: 50
         }
       }
     });
-
     var zoomControl = new ymaps.control.ZoomControl({
       options: {
         size: 'small',
@@ -46,17 +38,13 @@ var map = (function () {
       }
     });
 
-    map.controls.add(geolocationControl);
-    map.controls.add(zoomControl);
-
-    var myButton = new ymaps.control.Button("Моя кнопка");
-
-    map.controls.add(myButton, {float: 'left'});
-
+    map.controls
+      .add(geolocationControl)
+      .add(zoomControl);
   }
 
   return {
-    init: function() {
+    init: function () {
       ymaps.ready(init);
     }
   }
