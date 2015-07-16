@@ -11,7 +11,7 @@
 
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -67,26 +67,16 @@
     <!--</span>-->
     <!--</div>&lt;!&ndash; /input-group &ndash;&gt;-->
 
-    <div id="offices-map-widget">
+    <!--<div id="offices-map-widget">-->
       <!--<div class="input-group">-->
         <!--<input type="text" class="form-control" placeholder="Search for...">-->
         <!--<span class="input-group-btn">-->
           <!--<button class="btn btn-default" type="button">Go!</button>-->
         <!--</span>-->
       <!--</div>-->
-      <!-- /input-group -->
+       <!--/input-group-->
       <!--<hr>-->
-      <div >
-        <input type="text" placeholder="Адрес, номер дома или станция метро" />
-        <span>
-		      <button type="button">
-            Найти
-          </button>
-        </span>
-      </div>
-    </div>
-
-
+    <!--</div>-->
     <!--<div id="map" class="panel"></div>-->
 
   </div>
@@ -122,6 +112,7 @@
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/requirejs/require.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -145,24 +136,24 @@
 <!-- endbuild -->
 
 <!-- build:js scripts/offices-map-widget.min.js -->
-<script src="scripts/offices-map-widget.js"></script>
+<script src="scripts/widget-settings.js"></script>
 <script src="scripts/map-init.js"></script>
+<script src="scripts/offices-map-widget.js"></script>
 <!-- endbuild -->
 
 <!-- Offices-widget init -->
 <script>
 
   var settings = {
-    id: "offices-map"
+    hostElement: "#offices-map"// id
     //, size: [200,300]
     , center: [55.76, 37.64]
   };
 
-  w.init(settings);
+  officesMapWidget.init(settings);
 
 </script>
 <!-- Offices-widget init end -->
-
 
 </body>
 </html>
