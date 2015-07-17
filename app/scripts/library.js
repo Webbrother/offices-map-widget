@@ -14,3 +14,10 @@ function removeClass(ele,cls) {
     ele.className=ele.className.replace(reg,' ');
   }
 }
+
+function getElementFromHTHML(string) {
+  var tempDiv = document.createElement('div');
+  tempDiv.innerHTML = string;
+  return tempDiv.childNodes;
+}
+
