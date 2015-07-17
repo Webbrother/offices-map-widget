@@ -2,7 +2,7 @@ var map = (function () {
   var map,
     myPlacemark;
 
-  function init() {
+  function init(parametets) {
     map = new ymaps.Map("map", {
       center: [55.76, 37.64],
       zoom: 7,
@@ -10,7 +10,8 @@ var map = (function () {
     });
 
     myPlacemark = new ymaps.Placemark(
-      [55.76, 37.64],
+      //[55.76, 37.64],
+      parametets.center,
       {
         content: "Москва!",
         balloonContent: "Столица России"
@@ -44,8 +45,10 @@ var map = (function () {
   }
 
   return {
-    init: function () {
-      ymaps.ready(init);
+    init: function (parameters) {
+      ymaps.ready(function(parameters) {
+        init(parameters);
+      });
     }
   }
 })();

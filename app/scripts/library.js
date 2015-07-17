@@ -20,4 +20,3 @@ function getElementFromHTHML(string) {
   tempDiv.innerHTML = string;
   return tempDiv.firstChild;
 }
-

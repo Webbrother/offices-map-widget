@@ -3,6 +3,9 @@ var widgetSettings = {
   mapId: 'map',
   buttonId: 'offices-map-widget-filters-button',
   mapContainerId: 'map-container',
+
+
+  // list of filters here:
   filtersPanel: {
     id: 'offices-map-widget-filters',
     filters: [{
