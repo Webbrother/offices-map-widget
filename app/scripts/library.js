@@ -18,6 +18,6 @@ function removeClass(ele,cls) {
 function getElementFromHTHML(string) {
   var tempDiv = document.createElement('div');
   tempDiv.innerHTML = string;
-  return tempDiv.childNodes;
+  return tempDiv.firstChild;
 }
 

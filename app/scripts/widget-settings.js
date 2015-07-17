@@ -6,15 +6,14 @@ var widgetSettings = {
   filtersPanel: {
     id: 'offices-map-widget-filters',
     filters: [{
-
+      name: 'offices',
+      description: 'Офисы и центры обслуживания'
     },{
-
+      name: 'dealers',
+      description: 'Дилеры и партнеры'
     },{
-
-    },{
-
-    },{
-
+      name: 'webmarkets',
+      description: 'Интернет-магазин'
     }]
   }
 

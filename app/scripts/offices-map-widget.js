@@ -15,7 +15,7 @@ var officesMapWidget = (function () {
                       + '<button id="offices-map-widget-filters-button" class="btn btn-default">Фильтры</button>'
                       + '<div id="map"></div>'
                       + '<div id="offices-map-widget-filters" class="col-md-4">'
-                        + '<div class="checkbox"><label><input type="checkbox">Name</label></div>'
+                        //+ '<div class="checkbox"><label><input type="checkbox">Name</label></div>'
                       + '</div>'
                     + '</div>'
                   + '</div>';
@@ -54,13 +54,27 @@ var officesMapWidget = (function () {
       }, 200);
     }
 
+    function addFilters(filtersParameters) {
+      var fragment = document.createDocumentFragment();
+      var filter;
+      filtersParameters.forEach(function(filterParameters, i, list) {
+        filter = new Filter(filterParameters);
+        self.filters.push(filter);
+        fragment.appendChild(filter.el);
+      });
+
+      self.el.appendChild(fragment);
+    }
+
     this.el = document.getElementById(parameters.id);
     this.enabled = false;
+    this.filters = [];
     this.toggle = function() {
-      //this.enabled ? this.el.style.opacity = 0 : this.el.style.opacity = 0.5;
       this.enabled ? hide() : show();
       this.enabled = !this.enabled;
-    }
+    };
+
+    addFilters(parameters.filters);
   }
 
   function bind() {
