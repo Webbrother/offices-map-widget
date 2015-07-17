@@ -1,7 +1,8 @@
 var widgetSettings = {
   widgetId: 'offices-map-widget',
   mapId: 'map',
-  buttonId: 'offices-map-widget-filters-button',
+  filtersButtonId: 'offices-map-widget-filters-button',
+  searchButtonId: 'offices-map-widget-search-btn',
   mapContainerId: 'map-container',
 
 

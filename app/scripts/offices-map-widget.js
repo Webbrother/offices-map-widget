@@ -6,7 +6,7 @@ var officesMapWidget = (function () {
                     + '<div class="panel-heading input-group">'
                       + '<input type="text" class="form-control" placeholder="Адрес, номер дома или станция метро">'
                       + '<span class="input-group-btn">'
-                        + '<button class="btn btn-default" type="button">Найти!</button>'
+                        + '<button id="offices-map-widget-search-btn" class="btn btn-default" type="button">Найти!</button>'
                       + '</span>'
                     + '</div>'
                     //search element end
@@ -37,7 +37,20 @@ var officesMapWidget = (function () {
   function Filter(parameters) {
     var template = '<div class="checkbox" data="' + parameters.name + '"><label><input type="checkbox">' + parameters.description + '</label></div>';
     this.el = getElementFromHTHML(template);
+    this.checkbox = this.el.getElementsByTagName('input')[0];
+    this.checkbox.addEventListener('click', this.clickEventListener );
   }
+
+  Filter.prototype.clickEventListener = function(e) {
+    console.log('filter clicked');
+
+    $.post('http://bee2map.azurewebsites.net/api/map/find'
+      ,{Metro:'Охотный ряд'}
+      ,function(data) {
+      console.log(data);
+    });
+
+  };
 
   function FiltersPanel(parameters) {
     var self = this;
@@ -78,13 +91,21 @@ var officesMapWidget = (function () {
   }
 
   function bind() {
-    var filtersButton = document.getElementById(widgetSettings.buttonId);
+
+    var filtersButton = document.getElementById(widgetSettings.filtersButtonId);
     var filtersPanel = new FiltersPanel(widgetSettings.filtersPanel);
+    var searchButton = document.getElementById(widgetSettings.searchButtonId);
 
     filtersButton.addEventListener('click', function() {
       filtersPanel.toggle();
-    })
+    });
+
+    searchButton.addEventListener('click', function() {
+      console.log('search clicked');
+    });
   }
+
+
 
   function init(initSettings) {
     prepareWidgetDOM(initSettings);
