@@ -1,91 +1,78 @@
 var officesMapWidget = (function () {
 
-  function prepareWidgetDOM(initSettings) {
-    var template = '<div class="panel panel-default">'
-                    //search panel start
-                    + '<div class="panel-heading input-group">'
-                      + '<input type="text" class="form-control" placeholder="Адрес, номер дома или станция метро">'
-                      + '<span class="input-group-btn">'
-                        + '<button id="offices-map-widget-search-btn" class="btn btn-default" type="button">Найти!</button>'
-                      + '</span>'
-                    + '</div>'
-                    //search panel end
-
-                    + '<div class="panel-body" id="map-container">'
-                      + '<button id="offices-map-widget-filters-button" class="btn btn-default">Фильтры</button>'
-                      + '<div id="map"></div>'
-                      + '<div id="offices-map-widget-filters" class="col-md-4">'
-                        //+ '<div class="checkbox"><label><input type="checkbox">Name</label></div>'
-                      + '</div>'
-                    + '</div>'
-                  + '</div>';
-
-    var hostElement = document.getElementById(initSettings.hostElementId);
-    hostElement.innerHTML = template;
-
-    var widget = hostElement.firstChild;
-    widget.id = widgetSettings.widgetId;
-
-    var mapContainer = document.getElementById(widgetSettings.mapContainerId);
-    var map = document.getElementById(widgetSettings.mapId);
-    var search = widget.firstChild;
-
-    mapContainer.style.height = widget.offsetHeight - search.offsetHeight + "px";
-    map.style.height = widget.offsetHeight - search.offsetHeight - 2 + "px";// -2 because of borders
+  function Element() {
   }
 
+  Element.prototype.init = function(settings) {
+    this.el = createDOMFromString(settings.template);
+    this.el.id = settings.id;
+    this.container = document.getElementById(settings.containerId);
+    this.container.appendChild(this.el);
+  };
+
+  function Widget(settings) {
+    var self = this;
+    this.init(settings);
+  }
+
+  Widget.prototype = new Element();
+
+  function SearchPanel(settings) {
+    var self = this;
+    this.init(settings);
+    this.button = this.el.querySelector('button');
+    this.input = this.el.querySelector('input');
+
+    this.search = function() {
+      var criteria = {Metro: self.input.value};
+      ymap.makeSearch(criteria);
+    };
+
+    this.button.addEventListener('click', function(e) {
+      self.search();
+    });
+
+    this.input.addEventListener("keypress", function() {
+      if (event.keyCode == 13) self.search();
+    });
+  }
+
+  SearchPanel.prototype = new Element();
+
   function Filter(parameters) {
+    var self = this;
     var template = '<div class="checkbox" data="' + parameters.name + '"><label><input type="checkbox">' + parameters.description + '</label></div>';
+    this.name = parameters.name;
     this.el = createDOMFromString(template);
     this.checkbox = this.el.getElementsByTagName('input')[0];
-    this.checkbox.addEventListener('click', this.clickEventListener );
+    this.checkbox.addEventListener('click', self.clickEventListener.bind(self) );
   }
 
   Filter.prototype.clickEventListener = function(e) {
-    console.log('filter clicked');
-
-    $.post('http://bee2map.azurewebsites.net/api/map/find'
-      ,{Metro:'Охотный ряд'}
-      ,function(data) {
-      console.log(data);
-    });
-
+    this.parent.criteria['Is' + this.name] = this.checkbox.checked;
+    ymap.makeSearch(this.parent.criteria);
   };
 
-  function Widget(initSettings) {
-    var self = this;
-    var hostElement = document.getElementById(initSettings.hostElementId);
-
-    this.el = createDOMFromString(widgetSettings.widget.template);
-    this.el.id = widgetSettings.widgetId;
-
-
-
-    hostElement.appendChild(self.el);
-
-    debugger;
-  }
-
-  function FiltersPanel(parameters) {
+  function FiltersPanel(settings) {
+    this.init(settings);
     var self = this;
 
     function show() {
       self.el.style.display = 'block';
       self.el.style.opacity = 0.8;
     }
-
     function hide() {
       self.el.style.opacity = 0;
       setTimeout(function() {
         self.el.style.display = 'none';
       }, 200);
     }
-
     function addFilters(filters) {
       var fragment = document.createDocumentFragment();
       var filter;
       filters.forEach(function(filterParameters, i, list) {
         filter = new Filter(filterParameters);
+        filter.parent = self;
         self.filters.push(filter);
         fragment.appendChild(filter.el);
       });
@@ -93,56 +80,69 @@ var officesMapWidget = (function () {
       self.el.appendChild(fragment);
     }
 
-    this.el = document.getElementById(parameters.id);
+    //this.el = document.getElementById(parameters.id);
     this.enabled = false;
     this.filters = [];
+    this.criteria = {
+      Metro: '',
+      IsClientCenter: false,
+      IsDealer: false,
+      IsPartner: false,
+      IsOnlineShop: false
+    };
+
     this.toggle = function() {
       this.enabled ? hide() : show();
       this.enabled = !this.enabled;
     };
 
-    addFilters(parameters.filters);
-  }
-
-  function SearchPanel() {
-    var self = this;
-    this.el = document.createDocumentFragment();
-    this.el.innerHTML = widgetSettings.searchPanel.template;
-
-    console.log(self.el);
-  }
-
-  function bind() {
-
-    var filtersButton = document.getElementById(widgetSettings.filtersButtonId);
-    var filtersPanel = new FiltersPanel(widgetSettings.filtersPanel);
-    var searchButton = document.getElementById(widgetSettings.searchButtonId);
+    addFilters(settings.filters);
+    var filtersButton = document.getElementById(settings.button.id);
 
     filtersButton.addEventListener('click', function() {
-      filtersPanel.toggle();
+      self.toggle();
     });
 
-    searchButton.addEventListener('click', function(e) {
-      debugger;
-      console.log('search clicked');
-      map.makeSearch()
-    });
-
-    //var test = new SearchPanel();
   }
 
+  FiltersPanel.prototype = new Element();
+
+  FiltersPanel.prototype.init = function(settings) {
+    this.el = createDOMFromString(settings.template);
+    this.el.id = settings.id;
+    this.button = createDOMFromString(settings.button.template);
+
+    this.container = document.getElementById(settings.containerId);
+    this.container.appendChild(this.button);
+    this.container.appendChild(this.el);
+  };
+
+  function MapContainer(settings, searchPanel) {
+    this.init(settings);
+    this.el.style.height = this.container.offsetHeight - searchPanel.el.offsetHeight + 'px';
+  }
+
+  MapContainer.prototype = new Element();
+
+  function Map(settings, widget, searchPanel) {
+    this.init(settings);
+    this.el.style.height = widget.el.offsetHeight - searchPanel.el.offsetHeight - 2 + "px";
+  }
+
+  Map.prototype = new Element();
+
+
   function init(initSettings) {
+    wSettings = widgetSettings.get(initSettings);
 
-    //initSettings = {
-    //  hostElementId: "offices-map"
-    //  , center: [55.76, 37.64]
-    //};
+    var widget = new Widget(wSettings.widget);
+    var searchPanel = new SearchPanel(wSettings.searchPanel);
+    var mapContainer = new MapContainer(wSettings.mapContainer, searchPanel);
+    var map = new Map(wSettings.map, widget, searchPanel);
+    var filtersPanel = new FiltersPanel(wSettings.filtersPanel);
 
-    //prepareWidgetDOM(initSettings);
-    var test = new Widget(initSettings);
-    bind();
+    ymap.init(initSettings, wSettings);
 
-    map.init(initSettings);
   }
 
   return {
