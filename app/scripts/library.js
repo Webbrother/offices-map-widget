@@ -15,7 +15,7 @@ function removeClass(ele,cls) {
   }
 }
 
-function getElementFromHTHML(string) {
+function createDOMFromString(string) {
   var tempDiv = document.createElement('div');
   tempDiv.innerHTML = string;
   return tempDiv.firstChild;

@@ -2,14 +2,14 @@ var officesMapWidget = (function () {
 
   function prepareWidgetDOM(initSettings) {
     var template = '<div class="panel panel-default">'
-                    //search element start
+                    //search panel start
                     + '<div class="panel-heading input-group">'
                       + '<input type="text" class="form-control" placeholder="Адрес, номер дома или станция метро">'
                       + '<span class="input-group-btn">'
                         + '<button id="offices-map-widget-search-btn" class="btn btn-default" type="button">Найти!</button>'
                       + '</span>'
                     + '</div>'
-                    //search element end
+                    //search panel end
 
                     + '<div class="panel-body" id="map-container">'
                       + '<button id="offices-map-widget-filters-button" class="btn btn-default">Фильтры</button>'
@@ -36,7 +36,7 @@ var officesMapWidget = (function () {
 
   function Filter(parameters) {
     var template = '<div class="checkbox" data="' + parameters.name + '"><label><input type="checkbox">' + parameters.description + '</label></div>';
-    this.el = getElementFromHTHML(template);
+    this.el = createDOMFromString(template);
     this.checkbox = this.el.getElementsByTagName('input')[0];
     this.checkbox.addEventListener('click', this.clickEventListener );
   }
@@ -51,6 +51,20 @@ var officesMapWidget = (function () {
     });
 
   };
+
+  function Widget(initSettings) {
+    var self = this;
+    var hostElement = document.getElementById(initSettings.hostElementId);
+
+    this.el = createDOMFromString(widgetSettings.widget.template);
+    this.el.id = widgetSettings.widgetId;
+
+
+
+    hostElement.appendChild(self.el);
+
+    debugger;
+  }
 
   function FiltersPanel(parameters) {
     var self = this;
@@ -67,10 +81,10 @@ var officesMapWidget = (function () {
       }, 200);
     }
 
-    function addFilters(filtersParameters) {
+    function addFilters(filters) {
       var fragment = document.createDocumentFragment();
       var filter;
-      filtersParameters.forEach(function(filterParameters, i, list) {
+      filters.forEach(function(filterParameters, i, list) {
         filter = new Filter(filterParameters);
         self.filters.push(filter);
         fragment.appendChild(filter.el);
@@ -90,6 +104,14 @@ var officesMapWidget = (function () {
     addFilters(parameters.filters);
   }
 
+  function SearchPanel() {
+    var self = this;
+    this.el = document.createDocumentFragment();
+    this.el.innerHTML = widgetSettings.searchPanel.template;
+
+    console.log(self.el);
+  }
+
   function bind() {
 
     var filtersButton = document.getElementById(widgetSettings.filtersButtonId);
@@ -100,15 +122,24 @@ var officesMapWidget = (function () {
       filtersPanel.toggle();
     });
 
-    searchButton.addEventListener('click', function() {
+    searchButton.addEventListener('click', function(e) {
+      debugger;
       console.log('search clicked');
+      map.makeSearch()
     });
+
+    //var test = new SearchPanel();
   }
 
-
-
   function init(initSettings) {
-    prepareWidgetDOM(initSettings);
+
+    //initSettings = {
+    //  hostElementId: "offices-map"
+    //  , center: [55.76, 37.64]
+    //};
+
+    //prepareWidgetDOM(initSettings);
+    var test = new Widget(initSettings);
     bind();
 
     map.init(initSettings);

@@ -60,27 +60,7 @@
 </nav>
 
 <div class="container">
-  <div id="offices-map">
-    <!--<div class="input-group">-->
-    <!--<input type="text" class="form-control" placeholder="Search for...">-->
-    <!--<span class="input-group-btn">-->
-    <!--<button class="btn btn-default" type="button">Go!</button>-->
-    <!--</span>-->
-    <!--</div>&lt;!&ndash; /input-group &ndash;&gt;-->
-
-    <!--<div id="offices-map-widget">-->
-      <!--<div class="input-group">-->
-        <!--<input type="text" class="form-control" placeholder="Search for...">-->
-        <!--<span class="input-group-btn">-->
-          <!--<button class="btn btn-default" type="button">Go!</button>-->
-        <!--</span>-->
-      <!--</div>-->
-       <!--/input-group-->
-      <!--<hr>-->
-    <!--</div>-->
-    <!--<div id="map" class="panel"></div>-->
-
-  </div>
+  <div id="offices-map"></div>
 </div>
 
 <footer class="footer">
@@ -138,19 +118,23 @@
 <!-- build:js scripts/offices-map-widget.min.js -->
 <script src="scripts/library.js"></script>
 <script src="scripts/widget-settings.js"></script>
-<script src="scripts/map.js"></script>
-<script src="scripts/offices-map-widget.js"></script>
+<script src="scripts/ymap.js"></script>
+<!--<script src="scripts/offices-map-widget.js"></script>-->
+<script src="scripts/offices-map-widget2.js"></script>
+
 <!-- endbuild -->
 
 <!-- Offices-widget init -->
 <script>
 
-  var settings = {
-    hostElementId: "offices-map"// id
-    , center: [55.76, 37.64]
+  var initSettings = {
+    hostElementId: "offices-map",
+    center: [55.76, 37.64],
+    dataSourceURL: 'http://bee2map.azurewebsites.net/api/map/find'
+    //url: '/api/map/find',
   };
 
-  officesMapWidget.init(settings);
+  officesMapWidget.init(initSettings);
 
 </script>
 <!-- Offices-widget init end -->

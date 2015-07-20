@@ -2,13 +2,13 @@
   height: 100%;
 }
 
-#map-container {
+#offices-map-widget-map-container {
   position: relative;
   height: 100%;
   padding: 0 0 2px 0;
 }
 
-#map {
+#offices-map-widget-map {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,7 +16,7 @@
   height: 100%;
 }
 
-#offices-map-widget-filters {
+#offices-map-widget-filters-panel {
   display: none;
   opacity: 0;
   position: relative;
