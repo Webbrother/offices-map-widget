@@ -80,7 +80,6 @@ var officesMapWidget = (function () {
       self.el.appendChild(fragment);
     }
 
-    //this.el = document.getElementById(parameters.id);
     this.enabled = false;
     this.filters = [];
     this.criteria = {
@@ -141,6 +140,8 @@ var officesMapWidget = (function () {
     var map = new Map(wSettings.map, widget, searchPanel);
     var filtersPanel = new FiltersPanel(wSettings.filtersPanel);
 
+    loadingAnimationBox = new LoadingAnimationBox( document.getElementById(initSettings.hostElementId) );
+    loadingAnimationBox.on();
     ymap.init(initSettings, wSettings);
 
   }

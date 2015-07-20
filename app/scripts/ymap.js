@@ -61,6 +61,7 @@ var ymap = (function () {
   }
 
   function makeSearch(criteria) {
+    loadingAnimationBox.on();
     $.ajax({
       url: initSettings.dataSourceURL,
       data: criteria,
@@ -70,6 +71,7 @@ var ymap = (function () {
         ymaps.geoQuery(json)
           .addToMap(map)
           .applyBoundsToMap(map, { checkZoomRange: true });
+        loadingAnimationBox.off();
       },
       error: function (data) {
         console.error('Не удалось получить данные с сервера.', data);
