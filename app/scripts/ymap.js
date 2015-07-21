@@ -5,7 +5,7 @@ var ymap = (function () {
   function init(initSettings, wSettings) {
     map = new ymaps.Map(wSettings.map.id, {
       center: initSettings.center,
-      zoom: 7,
+      zoom: 13,
       controls: ['fullscreenControl']
     });
 
