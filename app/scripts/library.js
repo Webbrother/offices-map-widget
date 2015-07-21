@@ -21,23 +21,16 @@ function createDOMFromString(string) {
   return tempDiv.firstChild;
 }
 
-//
-//var loading = (function (el, isLoading) {
-//
-//  var loadingEl  = createDOMFromString("<div class='box-loading'></div>");
-//
-//  if (isLoading) {
-//    el.appendChild(loadingEl);
-//    el.style.position = "relative";
-//  } else {
-//    el.style.position = "";
-//    loadingEl.remove();
-//  }
-//
-//  return function() {
-//
-//  };
-//})();
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+}
 
 function LoadingAnimationBox(el) {
 
