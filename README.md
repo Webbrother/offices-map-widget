@@ -12,6 +12,7 @@ https://github.com/yeoman/generator-gulp-webapp
 1. Установить Node.js
 2. В консоли (находясь в директории проекта) исполнить команды
 
+
       npm i
       
       bower i
@@ -23,12 +24,12 @@ https://github.com/yeoman/generator-gulp-webapp
  
       gulp serve
       
-Сборщик объединяет и минимизирует стили и js.
-      
 Для билда проекта:
 ------------------
 
       gulp
+      
+Сборщик объединяет и минимизирует стили и js.
       
 Для запуска собранного проекта:
 ------------------
@@ -39,7 +40,6 @@ https://github.com/yeoman/generator-gulp-webapp
 ====================
 Сейчас в виджете используется урезанная версия Bootstrap.  
 Из внешних библиотек используется только jQuery.ajax.
-
 
 
 Settings.js
