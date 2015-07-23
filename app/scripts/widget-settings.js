@@ -7,11 +7,10 @@ var widgetSettings = (function() {
         mapId = 'offices-map-widget-map';
 
     return {
-      widgetId: 'offices-map-widget',
-
-      filtersButtonId: 'offices-map-widget-filters-button',
-      searchButtonId: 'offices-map-widget-search-btn',
-
+      //widgetId: 'offices-map-widget',
+      //
+      //filtersButtonId: 'offices-map-widget-filters-button',
+      //searchButtonId: 'offices-map-widget-search-btn',
 
       widget: {
         containerId: initSettings.hostElementId,

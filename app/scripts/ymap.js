@@ -1,6 +1,5 @@
 var ymap = (function () {
-  var map,
-    myPlacemark;
+  var map;
 
   function init(initSettings, wSettings) {
     map = new ymaps.Map(wSettings.map.id, {
